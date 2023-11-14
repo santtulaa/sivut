@@ -12,5 +12,4 @@ miten laittaa venv päälle:
 source/venv/bin/activate
 ja lopettaa: deactivate
 
-
-
+miten run: flask run
