@@ -1,5 +1,5 @@
 from app import app
-from flask import Flask, render_template
+from flask import render_template, request
 import first
 ##muutki pyt pitää importtaa jos on liikettä
 
@@ -8,7 +8,27 @@ import first
 def home():
     return render_template("index.html")
 
-@app.route("/register")
+@app.route("/register", methods=["get", "post"])
+def register():
+    if request.method == "GET":
+        return render_template("register.html")
+    
+    if request.method == "POST":
+        username = request.form["username"]
+        if len(username) < 2 or len(username)>20:
+            return render_template("error.html", message ="tunnuksessa tulee olla 2-20 merkkiä")
+        
+        password1 = request.form["password1"]
+        password2 = request.form["password2"]
+        if password1 != password2:
+            return render_template("error.html", message="Salasanat eroavat")
+        if password1 =="":
+            return render_template("error.html", message="Salasana ei voi olla tyhjä")
+        
+        ##if not users.register(username, password1):
+        ##    return render_template("error.html", message = "rekisteröinti ei onnistunut")
+  
+    
 
 
 @app.route("/calendar")
