@@ -8,7 +8,7 @@ CREATE TABLE users (
 
 CREATE TABLE reservations (
     id SERIAL PRIMARY KEY,
-    creator_id INTEGER REFERENCES users,
+    booker_id INTEGER REFERENCES users,
     visible INTEGER REFERENCES users
 );
 
