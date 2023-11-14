@@ -13,3 +13,6 @@ source/venv/bin/activate
 ja lopettaa: deactivate
 
 miten run: flask run
+
+jos juokset muiden sovelluksen, niin voit ladata requirementsit tuolt
+pip install -r requirements.txt
