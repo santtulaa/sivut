@@ -1,6 +1,7 @@
 from app import app
-from flask import render_template, request
+from flask import render_template, request, redirect
 import first
+import users
 ##muutki pyt pitää importtaa jos on liikettä
 
 
@@ -29,7 +30,18 @@ def register():
         ##    return render_template("error.html", message = "rekisteröinti ei onnistunut")
   
     
+@app.route("/login", methods=["get", "post"])
+def login():
+    if request.method == "GET":
+        return render_template("login.html")
+    
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
 
+    if not users.login(username, password):
+        return render_template("error.html", message="Väärä tunnus tai salasana")
+    return redirect("/login")
 
 @app.route("/calendar")
 def calendar():
