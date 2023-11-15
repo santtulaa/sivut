@@ -15,13 +15,13 @@ CREATE TABLE reservations (
 CREATE TABLE prices (
     id SERIAL PRIMARY KEY,
     wknd_p INTEGER,
-    week_p INTEGER,
+    week_p INTEGER
 );
 
 CREATE TABLE discounts (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
-    discount REFERENCES users
+    discount INTEGER REFERENCES users
 );
 
 CREATE TABLE reviews (

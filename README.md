@@ -35,9 +35,9 @@ laittaa requirements.txt kuntoon vielä ennen sunnuntaita
 DATABASE_URL=postgresql:///santtulaa
 SECRET_KEY=43f71de180ba654ee56e8ade27f89807
 4. seuraavaksi aktivoi virtuaaliympäristö ja asenna sovelluksen riippuvuuden komennoilla:
-python3 -m venv venv
-source venv/bin/activate
-pip install -r ./requirements.txt
+- python3 -m venv venv
+- source venv/bin/activate
+- pip install -r requirements.txt
 5. Määritä vielä tietokannan skeema komennolla psql < schema.sql
 6. Voit käynnistää sovelluksen komennolla flask run
 
