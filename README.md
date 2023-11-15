@@ -1,9 +1,9 @@
-Karhunkyttäys sivut
+# Karhunkyttäys sivut #
 Käyttäjä voi luoda ja kirjautua sisään, tarkastella muiden varauksia, sekä omia, hintoja sekä laittaa unohditko salasanasi
 ylläpitäjä voi tarkastella varauksia, perua niitä, sekä varata ilmaiseksi ja muuttaa päivien hintoja
 
 
-omat muistiinpanot:
+# omat muistiinpanot: #
 
 miten laittaa psql päälle
 start-pg.sh
@@ -21,3 +21,23 @@ pip install -r requirements.txt
 
 jos on juoksemmassa jo toinen ohjelma niin saat tietää sen komennolla lsof -i:5000
 ja voit tappaa sen kill "pid numero", jos ei toimi voit tappaa sen kill -9 "pid numero"
+
+python3: pääsee pois control + d
+
+MUISTA!!!!
+laittaa requirements.txt kuntoon vielä ennen sunnuntaita
+
+
+# Käynnistysohjeet: #
+1. Kloonaa projekti omalle koneellesi
+2. siirry juurikansioon
+3. luo kansio .env ja määritä sen sisällöksi:
+DATABASE_URL=postgresql:///santtulaa
+SECRET_KEY=43f71de180ba654ee56e8ade27f89807
+4. seuraavaksi aktivoi virtuaaliympäristö ja asenna sovelluksen riippuvuuden komennoilla:
+python3 -m venv venv
+source venv/bin/activate
+pip install -r ./requirements.txt
+5. Määritä vielä tietokannan skeema komennolla psql < schema.sql
+6. Voit käynnistää sovelluksen komennolla flask run
+

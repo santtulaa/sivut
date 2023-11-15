@@ -26,8 +26,8 @@ def register():
         if password1 =="":
             return render_template("error.html", message="Salasana ei voi olla tyhjä")
         
-        ##if not users.register(username, password1):
-        ##    return render_template("error.html", message = "rekisteröinti ei onnistunut")
+        if not users.register(username, password1):
+            return render_template("error.html", message = "rekisteröinti ei onnistunut")
   
     
 @app.route("/login", methods=["get", "post"])
