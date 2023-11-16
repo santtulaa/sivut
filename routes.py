@@ -1,8 +1,7 @@
 from app import app
 from flask import render_template, request, redirect, session
-from users import register, get_user_id
-import users
-import first
+from users import get_user_id
+import users, reviews
 
 
 ##muutki pyt pitää importtaa jos on liikettä
@@ -10,7 +9,8 @@ import first
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    list = reviews.get_list()
+    return render_template("index.html", messages=list)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -75,3 +75,12 @@ events = [
         "date" : "2023-11-15",
     }
 ]
+
+@app.route("/send", methods=["POST"])
+def send():
+    comment = request.form["comment"]
+    if reviews.send(comment):
+        return redirect("/")
+    else:
+        return render_template("error.html", comment = "viestin lähetys ei onnistunut")
+    

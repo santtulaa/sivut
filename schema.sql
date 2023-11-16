@@ -25,7 +25,6 @@ CREATE TABLE discounts (
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
-    reservation_id INTEGER REFERENCES reservations,
-    stars INTEGER,
-    comment TEXT
+    comment TEXT,
+    sent_at TIMESTAMP
 );
