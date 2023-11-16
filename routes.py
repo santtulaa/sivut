@@ -27,12 +27,12 @@ def register():
         password2 = request.form["password2"]
 
         if password1 != password2:
-            return render_template("error.html", message="Salasanat eroavat")
+            return render_template("register.html")
         if password1 == "":
-            return render_template("error.html", message="Salasana ei voi olla tyhjä")
+            return render_template("register.html")
         
         if not users.register(name, password1):
-            return render_template("error.html", message="epäonnistui")
+            return render_template("resgister.html")
 
         session["user_id"] = get_user_id(name)  
         session["user_name"] = name
@@ -50,7 +50,7 @@ def login():
         password = request.form["password"]
 
     if not users.login(name, password):
-        return render_template("error.html", message="Väärä tunnus tai salasana")
+        return render_template("login.html")
     return redirect("/")
 
 
