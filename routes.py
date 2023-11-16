@@ -75,12 +75,14 @@ events = [
         "date" : "2023-11-15",
     }
 ]
-
 @app.route("/send", methods=["POST"])
 def send():
-    comment = request.form["comment"]
-    if reviews.send(comment):
+    content = request.form["content"]
+    if reviews.send(content):
         return redirect("/")
     else:
-        return render_template("error.html", comment = "viestin lähetys ei onnistunut")
+        return render_template("error.html", message="Viestin lähetys ei onnistunut")
     
+@app.route("/new")
+def new():
+    return render_template("new.html")
