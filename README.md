@@ -24,6 +24,9 @@ ja voit tappaa sen kill "pid numero", jos ei toimi voit tappaa sen kill -9 "pid 
 
 python3: pääsee pois control + d
 
+jos psql ei anna poistaa tablea, koska käytössä:
+ DROP TABLE taulukonnimi CASCADE;
+
 MUISTA!!!!
 laittaa requirements.txt kuntoon vielä ennen sunnuntaita
 
