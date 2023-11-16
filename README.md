@@ -33,10 +33,10 @@ laittaa requirements.txt kuntoon vielä ennen sunnuntaita
 
 # Käynnistysohjeet: #
 1. Kloonaa projekti omalle koneellesi 
-- git clone https://github.com/santtulaa/sivut.git
+- git clone git@github.com:santtulaa/sivut.git
 2. siirry juurikansioon
 3. luo kansio .env ja määritä sen sisällöksi:
-DATABASE_URL=postgresql:///santtulaa
+DATABASE_URL=postgresql:///salmelsa
 SECRET_KEY=43f71de180ba654ee56e8ade27f89807
 4. seuraavaksi aktivoi virtuaaliympäristö ja asenna sovelluksen riippuvuuden komennoilla:
 - pip install -r requirements.txt
