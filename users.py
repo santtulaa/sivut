@@ -54,4 +54,9 @@ def get_user_id(name):
 def check_csrf():
 	if session["csrf_token"] != request.form["csrf_token"]:
 		abort(403)
+          
+def username_exists(username):
+    sql = text("SELECT id FROM users WHERE name = :name")
+    result = db.session.execute(sql, {"name": username}).fetchone()
+    return result is not None
 

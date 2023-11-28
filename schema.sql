@@ -10,6 +10,12 @@ CREATE TABLE reservations (
     visible INTEGER REFERENCES users
 );
 
+CREATE TABLE tryreservations (
+    id SERIAL PRIMARY KEY,
+    todo TEXT,
+    date DATE
+);
+
 CREATE TABLE prices (
     id SERIAL PRIMARY KEY,
     wknd_p INTEGER,

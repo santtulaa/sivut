@@ -2,7 +2,7 @@ from app import app
 from flask import render_template, request, redirect, session
 from users import get_user_id
 import users, reviews
-
+from reservations import reservation
 
 ##muutki pyt pitää importtaa jos on liikettä
 
@@ -59,22 +59,16 @@ def logout():
     users.logout()
     return redirect("/")
 
-
 @app.route("/calendar")
 def calendar():
-    return render_template("calendar.html", events = events)
 
+    reservations = reservation()
 
-events = [
-    {
-        "todo": "committaa",
-        "date": "2023-11-14",
-    },
-    {
-        "todo" : "sql jutut yhteen",
-        "date" : "2023-11-15",
-    }
-]
+    if reservations is not False:
+        return render_template("calendar.html", events=reservations)
+    else:
+        return render_template("error.html", message="Error retrieving reservations from the database")
+
 @app.route("/send", methods=["POST"])
 def send():
     content = request.form["content"]
