@@ -1,7 +1,9 @@
-import os
+from sqlalchemy import func
 from db import db
-from flask import abort, request, session, render_template
-from sqlalchemy import text
+from sqlalchemy.sql import text
+import users
+from datetime import datetime
+
 
 def reservation():
     try:
@@ -21,3 +23,28 @@ def reservation():
     except Exception as e:
         print(f"Error retrieving reservations from the database: {e}")
         return False
+    
+def send(todo, date):
+    sql = text("INSERT INTO tryreservations (todo, date) VALUES (:todo, :date)")
+    db.session.execute(sql, {"todo": todo, "date": date })
+    db.session.commit()
+
+
+    return True
+
+# def send(reserve):
+#     user_id = users.user_id()
+#     if user_id == 0:
+#         return False
+#     sql = text("INSERT INTO tryreservations (todo, date) VALUES (:tofo, date")
+#     db.session.execute(sql, {"todo": todo, "date": date})
+#     db.session.commit()
+
+
+#     return True
+
+# CREATE TABLE tryreservations (
+#     id SERIAL PRIMARY KEY,
+#     todo TEXT,
+#     date DATE
+# );

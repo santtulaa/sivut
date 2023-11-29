@@ -3,6 +3,7 @@ from flask import render_template, request, redirect, session
 from users import get_user_id
 import users, reviews
 from reservations import reservation
+import reservations
 
 ##muutki pyt pitää importtaa jos on liikettä
 
@@ -77,6 +78,13 @@ def send():
     else:
         return render_template("error.html", message="Viestin lähetys ei onnistunut")
     
-@app.route("/new")
-def new():
-    return render_template("new.html")
+@app.route("/review")
+def review():
+    return render_template("review.html")
+
+@app.route("/reserve", methods=["POST"])
+def reserve():
+    todo = request.form.get("todo")
+    date = request.form.get("date")
+    reservations.send(todo, date)
+    return redirect(request.referrer)

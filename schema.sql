@@ -4,9 +4,9 @@ CREATE TABLE users (
     password TEXT
 );
 
-CREATE TABLE reservations (
+CREATE TABLE reserve (
     id SERIAL PRIMARY KEY,
-    booker_id INTEGER REFERENCES users,
+    booker_name INTEGER REFERENCES users,
     visible INTEGER REFERENCES users
 );
 
