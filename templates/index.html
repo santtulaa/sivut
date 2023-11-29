@@ -1,86 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Date Demo</title>
-  <style>
-    div {
-      color: black;
-    }
-  </style>
-  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-</head>
-<body>
- 
-<select name="year" id="year" multiple="multiple">
-  <option>2023</option>
-  <option>2024</option>
-  <option>2025</option>
-  <!-- Add more years as needed -->
-</select>
 
-<select name="month" id="month" multiple="multiple">
-  <option value="01">January</option>
-  <option value="02">February</option>
-  <option value="03">March</option>
-  <option value="04">April</option>
-  <option value="05">May</option>
-  <option value="06">June</option>
-  <option value="07">July</option>
-  <option value="08">August</option>
-  <option value="09">September</option>
-  <option value="10">October</option>
-  <option value="11">November</option>
-  <option value="12">December</option>
-</select>
 
-<select name="date" id="date" multiple="multiple">
-  <!-- You can customize the date options based on your requirements -->
-  <option>01</option>
-  <option>02</option>
-  <option>03</option>
-  <option>04</option>
-  <option>05</option>
-  <option>06</option>
-  <option>07</option>
-  <option>08</option>
-  <option>09</option>
-  <option>10</option>
-  <option>11</option>
-  <option>12</option>
-  <option>13</option>
-  <option>14</option>
-  <option>15</option>
-  <option>16</option>
-  <option>17</option>
-  <option>18</option>
-  <option>19</option>
-  <option>20</option>
-  <option>21</option>
-  <option>22</option>
-  <option>23</option>
-  <option>24</option>
-  <option>25</option>
-  <option>26</option>
-  <option>27</option>
-  <option>28</option>
-  <option>29</option>
-  <option>30</option>
-  <option>31</option>
-</select>
+<h2>Mökkisivut</h2>
 
-<div></div>
- 
-<script>
-  $("select").on("change", function () {
-    var yearStr = $("#year option:selected").text();
-    var monthStr = $("#month option:selected").text();
-    var dateStr = $("#date option:selected").text();
+<hr>
+{% for message in messages %}
+<i>Viesti:</i> {{ message[0] }}
+<p>
+<i>Lähettäjä:</i> {{ message[1] }}
+<p>
+<i>Aika:</i> {% if message[2] %} {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }} {% endif %}
+<hr>
+{% endfor %}
+{% if session.user_id %}
+Olet kirjautunut sisään.
+<a href="/review">Arvostele</a> | <a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+{% endif %}
+<p></p>
+<a href="/calendar">Varauksiin</a>
 
-    var str = yearStr + " " + monthStr + " " + dateStr;
-    $("div").text(str);
-  }).trigger("change");
-</script>
- 
-</body>
-</html>
+
+
