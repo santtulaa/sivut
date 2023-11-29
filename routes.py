@@ -88,3 +88,4 @@ def reserve():
     date = request.form.get("date")
     reservations.send(todo, date)
     return redirect(request.referrer)
+
