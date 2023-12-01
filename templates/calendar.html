@@ -17,7 +17,7 @@
                 {% for event in events %}
                 {
                     title: "{{ event.todo }}",
-                    start: new Date("{{ event.date }}"),
+                    start: "{{ event.date }}",
                 },
                 {% endfor %}
             ]

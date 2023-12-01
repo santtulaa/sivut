@@ -31,20 +31,3 @@ def send(todo, date):
 
 
     return True
-
-# def send(reserve):
-#     user_id = users.user_id()
-#     if user_id == 0:
-#         return False
-#     sql = text("INSERT INTO tryreservations (todo, date) VALUES (:tofo, date")
-#     db.session.execute(sql, {"todo": todo, "date": date})
-#     db.session.commit()
-
-
-#     return True
-
-# CREATE TABLE tryreservations (
-#     id SERIAL PRIMARY KEY,
-#     todo TEXT,
-#     date DATE
-# );

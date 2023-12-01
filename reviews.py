@@ -2,7 +2,6 @@ from sqlalchemy import func
 from db import db
 from sqlalchemy.sql import text
 import users
-from datetime import datetime
 
 
 def get_list():

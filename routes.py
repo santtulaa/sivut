@@ -1,10 +1,12 @@
+import os
 from app import app
 from flask import render_template, request, redirect, session
 from users import get_user_id
 import users, reviews
 from reservations import reservation
 import reservations
-
+from PIL import Image
+import numpy as np
 ##muutki pyt pitää importtaa jos on liikettä
 
 
@@ -89,3 +91,6 @@ def reserve():
     reservations.send(todo, date)
     return redirect(request.referrer)
 
+@app.route("/photoos")
+def photos():
+    return render_template("photoos.html")
