@@ -91,6 +91,16 @@ def reserve():
     reservations.send(todo, date)
     return redirect(request.referrer)
 
-@app.route("/photoos")
-def photos():
-    return render_template("photoos.html")
+@app.route('/photos', methods=['GET', 'POST'])
+def home():
+    if request.method == 'GET':
+        return render_template('photos.html', msg='')
+
+    image = request.files['file']
+    img = Image.open(image)
+    img = np.array(img)
+
+    print(img)
+    print(img.shape)
+
+    return render_template('photos.html', msg='Your image has been uploaded')
