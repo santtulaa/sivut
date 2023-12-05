@@ -16,21 +16,16 @@ CREATE TABLE tryreservations (
     date DATE
 );
 
-CREATE TABLE prices (
-    id SERIAL PRIMARY KEY,
-    wknd_p INTEGER,
-    week_p INTEGER
-);
-
-CREATE TABLE discounts (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users,
-    discount INTEGER REFERENCES users
-);
-
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
     comment TEXT,
     sent_at TIMESTAMP
+);
+
+CREATE TABLE Img (
+    id SERIAL PRIMARY KEY,
+    img TEXT,
+    name TEXT,
+    mimetype TEXT
 );

@@ -1,12 +1,17 @@
+from flask import render_template, request, redirect, session, Response, Flask
+from werkzeug.utils import secure_filename
 import os
 from app import app
-from flask import render_template, request, redirect, session
 from users import get_user_id
 import users, reviews
 from reservations import reservation
+
 import reservations
 from PIL import Image
 import numpy as np
+
+from db import db_init, db
+from models import Img
 ##muutki pyt pitää importtaa jos on liikettä
 
 
@@ -35,7 +40,7 @@ def register():
             return render_template("register.html")
         
         if not users.register(name, password1):
-            return render_template("resgister.html")
+            return render_template("register.html")
 
         session["user_id"] = get_user_id(name)  
         session["user_name"] = name
@@ -91,16 +96,60 @@ def reserve():
     reservations.send(todo, date)
     return redirect(request.referrer)
 
-@app.route('/photos', methods=['GET', 'POST'])
-def home():
-    if request.method == 'GET':
-        return render_template('photos.html', msg='')
+# @app.route('/upload', methods=['GET', 'POST'])
+# def home():
+#     if request.method == 'GET':
+#         return render_template('upload.html', msg='')
 
-    image = request.files['file']
-    img = Image.open(image)
-    img = np.array(img)
+    # image = request.files['file']
+    # img = Image.open(image)
+    # img = np.array(img)
 
-    print(img)
-    print(img.shape)
+    # print(img)
+    # print(img.shape)
 
-    return render_template('photos.html', msg='Your image has been uploaded')
+    # return render_template('photos.html', msg='Your image has been uploaded')
+
+
+# @app.route('/upload', methods=['GET', 'POST'])
+# def upload():
+#     if request.method == 'GET':
+#         return render_template('upload.html')
+#     pic = request.files['pic']
+#     if not pic:
+#         return 'No pic uploaded!', 400
+
+#     filename = secure_filename(pic.filename)
+#     mimetype = pic.mimetype
+#     if not filename or not mimetype:
+#         return 'Bad upload!', 400
+
+#     img = Img(img=pic.read(), name=filename, mimetype=mimetype)
+#     db.session.add(img)
+#     db.session.commit()
+
+#     return 'Img Uploaded!', 200
+
+
+# @app.route('/<int:id>')
+# def get_img(id):
+#     img = Img.query.filter_by(id=id).first()
+#     if not img:
+#         return 'Img Not Found!', 404
+
+#     return Response(img.img, mimetype=img.mimetype)
+upload_folder = os.path.join("static", "uploads")
+
+app.config["UPLOAD"] = upload_folder
+
+@app.route("/image", methods=["GET", "POST"])
+def image():
+    if request.method == "GET":
+        return render_template("image_render.html")
+    if request.method == 'POST':
+        file = request.files['img']
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD'], filename))
+        img = os.path.join(app.config['UPLOAD'], filename)
+        return render_template('image_render.html', img=img)
+    return render_template('image_render.html')
