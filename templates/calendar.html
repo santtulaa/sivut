@@ -17,7 +17,7 @@
                 {% for event in events %}
                 {
                     title: "{{ event.todo }}",
-                    start: "{{ event.date }}",
+                    start: "{{ event.date}}",
                 },
                 {% endfor %}
             ]
@@ -33,4 +33,16 @@
     <br>
     <input type="submit" value="Lähetä">
     </form>
+
+    <hr>
+{% for fixmessage in fixmessages %}
+<i>Viesti:</i> {{ fixmessage[0] }}
+<p>
+<i>Lähettäjä:</i> {{ fixmessage[1] }}
+<p>
+<i>Aika:</i> {% if fixmessage[2] %} {{ fixmessage[2].strftime("%Y-%m-%d %H:%M:%S") }} {% endif %}
+<hr>
+{% endfor %}
+<p></p>
+<a href="/">takas</a>
 </html>

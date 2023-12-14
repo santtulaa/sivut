@@ -4,12 +4,6 @@ CREATE TABLE users (
     password TEXT
 );
 
-CREATE TABLE reserve (
-    id SERIAL PRIMARY KEY,
-    booker_name INTEGER REFERENCES users,
-    visible INTEGER REFERENCES users
-);
-
 CREATE TABLE tryreservations (
     id SERIAL PRIMARY KEY,
     todo TEXT,
@@ -20,6 +14,13 @@ CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
     comment TEXT,
+    sent_at TIMESTAMP
+);
+
+CREATE TABLE fixes (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users,
+    fixcomment TEXT,
     sent_at TIMESTAMP
 );
 

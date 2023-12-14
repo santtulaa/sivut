@@ -3,7 +3,7 @@ from werkzeug.utils import secure_filename
 import os
 from app import app
 from users import get_user_id
-import users, reviews
+import users, reviews, fixes
 from reservations import reservation
 
 import reservations
@@ -69,11 +69,11 @@ def logout():
 
 @app.route("/calendar")
 def calendar():
-
+    list = fixes.get_list()
     reservations = reservation()
 
     if reservations is not False:
-        return render_template("calendar.html", events=reservations)
+        return render_template("calendar.html", events=reservations, fixmessages=list)
     else:
         return render_template("error.html", message="Error retrieving reservations from the database")
 
@@ -84,10 +84,23 @@ def send():
         return redirect("/")
     else:
         return render_template("error.html", message="Viestin lähetys ei onnistunut")
+
+@app.route("/sendfix", methods=["POST"])
+def sendfix():
+    content = request.form["content"]
+    if fixes.sendfix(content):
+        return redirect("/calendar")
+    else:
+        return render_template("error.html", message="Viestin lähetys ei onnistunut")
     
 @app.route("/review")
 def review():
     return render_template("review.html")
+
+
+@app.route("/fix")
+def fix():
+    return render_template("fix.html")
 
 @app.route("/reserve", methods=["POST"])
 def reserve():
@@ -141,6 +154,17 @@ def reserve():
 upload_folder = os.path.join("static", "uploads")
 
 app.config["UPLOAD"] = upload_folder
+
+@app.route('/show_photos')
+def show_photos():
+    # Specify the path to your photo folder
+    folder_path = os.path.join(app.static_folder, 'uploads')
+
+    # List all image files in the folder (filter by extension)
+    image_files = [f for f in os.listdir(folder_path) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
+
+    # Render the template and pass the list of image files
+    return render_template('show_photos.html', image_files=image_files)
 
 @app.route("/image", methods=["GET", "POST"])
 def image():
