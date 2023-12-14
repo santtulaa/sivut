@@ -12,6 +12,12 @@ import numpy as np
 
 from db import db_init, db
 from models import Img
+
+
+from flask import render_template, request, redirect, url_for
+from werkzeug.utils import secure_filename
+from base64 import b64encode
+from models import Img  # Import your Img model
 ##muutki pyt pitää importtaa jos on liikettä
 
 
@@ -155,25 +161,71 @@ upload_folder = os.path.join("static", "uploads")
 
 app.config["UPLOAD"] = upload_folder
 
+import os
+
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if request.method == 'GET':
+        return render_template('upload.html')
+
+    pic = request.files['pic']
+
+    if pic and allowed_file(pic.filename):
+        filename = secure_filename(pic.filename)
+        img_data = pic.read()
+
+        # Save the image to the database
+        img = Img(img=img_data, name=filename, mimetype=pic.mimetype)
+        db.session.add(img)
+        db.session.commit()
+
+        return redirect(url_for('show_photos'))
+    else:
+        return render_template('error.html', message='Invalid file type. Please upload a valid image file.')
+    
+
 @app.route('/show_photos')
 def show_photos():
-    # Specify the path to your photo folder
-    folder_path = os.path.join(app.static_folder, 'uploads')
+    # Retrieve images from the database
+    images = Img.query.all()
 
-    # List all image files in the folder (filter by extension)
-    image_files = [f for f in os.listdir(folder_path) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
+    # Pass b64encode to the template context
+    template_context = {
+        'images': images,
+        'b64encode': b64encode  # Pass b64encode to the template
+    }
 
-    # Render the template and pass the list of image files
-    return render_template('show_photos.html', image_files=image_files)
+    # Render the template and pass the list of images
+    return render_template('show_photos.html', **template_context)
 
-@app.route("/image", methods=["GET", "POST"])
-def image():
-    if request.method == "GET":
-        return render_template("image_render.html")
-    if request.method == 'POST':
-        file = request.files['img']
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD'], filename))
-        img = os.path.join(app.config['UPLOAD'], filename)
-        return render_template('image_render.html', img=img)
-    return render_template('image_render.html')
+# @app.route('/show_photos')
+# def show_photos():
+#     # Specify the path to your photo folder
+#     folder_path = os.path.join(app.static_folder, 'uploads')
+
+#     # List all image files in the folder (filter by extension)
+#     image_files = [f for f in os.listdir(folder_path) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
+
+#     # Render the template and pass the list of image files
+#     return render_template('show_photos.html', image_files=image_files)
+
+
+# @app.route("/image", methods=["GET", "POST"])
+# def image():
+#     if request.method == "GET":
+#         return render_template("image_render.html")
+#     if request.method == 'POST':
+#         file = request.files['img']
+#         filename = secure_filename(file.filename)
+#         file.save(os.path.join(app.config['UPLOAD'], filename))
+#         img = os.path.join(app.config['UPLOAD'], filename)
+#         return render_template('image_render.html', img=img)
+#     return render_template('image_render.html')

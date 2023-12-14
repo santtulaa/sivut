@@ -8,8 +8,8 @@
 <body>
     <h1>Photos</h1>
     <div>
-        {% for image_file in image_files %}
-            <img src="{{ url_for('static', filename='uploads/' + image_file) }}" alt="{{ image_file }}">
+        {% for image in images %}
+            <img src="data:{{ image.mimetype }};base64,{{ b64encode(image.img).decode('utf-8') }}" alt="{{ image.name }}">
         {% endfor %}
     </div>
 </body>
