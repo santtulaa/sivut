@@ -3,14 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show Photos</title>
+    <title>Photo Gallery</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel="stylesheet">
+    
+    <!-- Add this style block for image styling -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .gallery img {
+            width: 30%; /* Set the width to 19% to allow some spacing between images */
+            height: auto; /* Maintain the aspect ratio */
+            margin-bottom: 10px; /* Add some spacing between images */
+            border: 1px solid #ddd; /* Add a border to images for better visibility */
+            border-radius: 3px; /* Add a slight border-radius for a nicer look */
+        }
+
+        .upload-form {
+            margin-top: 20px;
+        }
+
+        .upload-form input {
+            margin-right: 5px;
+        }
+
+        .wrapper_review {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Photos</h1>
-    <div>
+    <div class="wrapper_review">
+        <h1>Upload Image</h1>
+        <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+            <input type="file" name="pic" accept=".png, .jpg, .jpeg, .gif" required>
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
+    <div class="gallery">
         {% for image in images %}
             <img src="data:{{ image.mimetype }};base64,{{ b64encode(image.img).decode('utf-8') }}" alt="{{ image.name }}">
         {% endfor %}
     </div>
+
+    <!-- Add the image upload form -->
+    <form class="upload-form" action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="pic" accept=".png, .jpg, .jpeg, .gif" required>
+        <button type="submit">Upload</button>
+    </form>
 </body>
 </html>

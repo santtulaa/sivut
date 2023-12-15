@@ -1,6 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel="stylesheet">
+</head>
+<header>
+{% if session.user_id %}
+Olet kirjautunut sisään.
+<a href="/review">Arvostele</a> | <a href="/logout">Kirjaudu ulos</a> | <a href="/calendar">Varauksiin</a> | <a href="/show_photos">Kuvat</a>
+<p>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+{% endif %}
+</header>
+
+<body>
+    
+
+</html><link rel="stylesheet" href="/staic/style.css">
+<div class="wrapper_review">
 <h2>Mökkisivut</h2>
 
+
 <hr>
+
 {% for message in messages %}
 <i>Viesti:</i> {{ message[0] }}
 <p>
@@ -9,24 +35,5 @@
 <i>Aika:</i> {% if message[2] %} {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }} {% endif %}
 <hr>
 {% endfor %}
-{% if session.user_id %}
-Olet kirjautunut sisään.
-<a href="/review">Arvostele</a> | <a href="/logout">Kirjaudu ulos</a>
-<p></p>
-<a href="/fix">korjaukset</a>
-<p></p>
-{% else %}
-<a href="/login">Kirjaudu sisään</a>
-{% endif %}
-<p></p>
-<a href="/calendar">Varauksiin</a>
-<p></p>
-<a href="/upload">Lisää kuva</a>
-<p></p>
-<a href="/show_photos">näytäkuvat</a>
-
-
-
-
-
-
+</div>
+</body>

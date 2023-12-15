@@ -33,7 +33,12 @@
     <br>
     <input type="submit" value="Lähetä">
     </form>
-
+    <form action="/sendfix" method="post">
+        Korjausviesti: <br>
+        <textarea name="content" rows="3" cols="40"></textarea>
+        <br>
+        <input type="submit" value="Lähetä">
+        </form>
     <hr>
 {% for fixmessage in fixmessages %}
 <i>Viesti:</i> {{ fixmessage[0] }}

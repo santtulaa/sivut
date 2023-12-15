@@ -1,51 +1,66 @@
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel="stylesheet">
+</head>
+<div class="wrapper_review">
+    {% block content %}
 
-<h2>Rekisteröinti</h2>
-
-<form action="/register" method="post" onsubmit="return check(this)">
-    Tunnus: <br><input type="text" name="name" minlength="2" maxlength="20">
+    <h2>Rekisteröinti</h2>
+    
+    <form action="/register" method="post" onsubmit="return check(this)">
+        Tunnus: <br><input type="text" name="name" minlength="2" maxlength="20">
+        <p>
+        Salasana: <br><input type="password" name="password1">
+        <p>
+        Salasana uudestaan: <br><input type="password" name="password2">
+    
+        {% if error_message %}
+            <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+    
+        <!-- Hidden field for username exists message -->
+        <input type="hidden" name="username_exists" value="{{ username_exists }}">
+    
+        <input type="submit" value="Luo tunnus">
+    </form>
+    
     <p>
-    Salasana: <br><input type="password" name="password1">
-    <p>
-    Salasana uudestaan: <br><input type="password" name="password2">
-
-    {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-    {% endif %}
-
-    <!-- Hidden field for username exists message -->
-    <input type="hidden" name="username_exists" value="{{ username_exists }}">
-
-    <input type="submit" value="Luo tunnus">
-</form>
-
-<p>
-<a href="/">Palaa takaisin</a>
-
-<script>
-    function check(form) {
-        if (form.password1.value != form.password2.value) {
-            alert("salasanat eivät ole samat");
-            return false;
+    <a href="/">Palaa takaisin</a>
+    
+    <script>
+        function check(form) {
+            if (form.password1.value != form.password2.value) {
+                alert("salasanat eivät ole samat");
+                return false;
+            }
+    
+            if (form.name.value.length < 2 || form.name.value.length > 20) {
+                alert("käyttäjätunnuksen pitää olla 2-20 merkkiä");
+                return false;
+            }
+    
+            if (form.password1.value == "") {
+                alert("salasana ei voi olla tyhjänä");
+                return false;
+            }
+    
+            // Check if username already exists
+            if (form.username_exists.value !== "") {
+                alert("käyttäjänimi on jo käytössä" + form.username_exists.value);
+                return false;
+            }
+    
+            return true;
         }
+    </script>
+    {% endblock %}
+    
+</div>
+</body>
 
-        if (form.name.value.length < 2 || form.name.value.length > 20) {
-            alert("käyttäjätunnuksen pitää olla 2-20 merkkiä");
-            return false;
-        }
 
-        if (form.password1.value == "") {
-            alert("salasana ei voi olla tyhjänä");
-            return false;
-        }
-
-        // Check if username already exists
-        if (form.username_exists.value !== "") {
-            alert("käyttäjänimi on jo käytössä" + form.username_exists.value);
-            return false;
-        }
-
-        return true;
-    }
-</script>
-{% endblock %}
