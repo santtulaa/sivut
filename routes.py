@@ -7,6 +7,7 @@ from db import db
 from users import get_user_id
 import users, reviews, fixes
 from reservations import reservation
+import reservations
 
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -16,7 +17,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route("/")
+@app.route("/front")
 def index():
     list = reviews.get_list()
     return render_template("index.html", messages=list)
@@ -47,7 +48,7 @@ def register():
 
         return redirect("/")
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def login_page():
     if request.method == "GET":
         return render_template("login.html")
@@ -59,12 +60,19 @@ def login_page():
         if not users.login(name, password):
             return render_template("login.html")
         
-        return redirect("/")
+        return redirect("/front")
 
 @app.route("/logout")
 def logout():
     users.logout()
     return redirect("/")
+
+@app.route("/reserve", methods=["POST"])
+def reserve():
+    todo = request.form.get("todo")
+    date = request.form.get("date")
+    reservations.send(todo, date)
+    return redirect(request.referrer)
 
 @app.route("/calendar")
 def calendar():
@@ -76,11 +84,12 @@ def calendar():
     else:
         return render_template("error.html", message="Error retrieving reservations from the database")
 
+
 @app.route("/send", methods=["POST"])
 def send():
     content = request.form["content"]
     if reviews.send(content):
-        return redirect("/")
+        return redirect("/front")
     else:
         return render_template("error.html", message="Viestin lähetys ei onnistunut")
 
@@ -98,13 +107,6 @@ def review():
 
 
 
-@app.route("/reserve", methods=["POST"])
-def reserve():
-    todo = request.form.get("todo")
-    date = request.form.get("date")
-    reservations=reservation()
-    reservations.send(todo, date)
-    return redirect(request.referrer)
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():

@@ -7,22 +7,21 @@
     <link rel="stylesheet" href="static/style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel="stylesheet">
 </head>
-<header>
-{% if session.user_id %}
-Olet kirjautunut sisään.
-<a href="/review">Arvostele</a> | <a href="/logout">Kirjaudu ulos</a> | <a href="/calendar">Varauksiin</a> | <a href="/show_photos">Kuvat</a>
-<p>
-{% else %}
-<a href="/login">Kirjaudu sisään</a>
-{% endif %}
-</header>
+<nav>
+    {% if session.user_id %}
+    <a href="/review">Write in the questbook</a> <a href="/calendar">Calendar</a> <a href="/show_photos">Photos</a> <a href="/logout">Sign out</a> 
+    <p>
+    {% else %}
+    <a href="/login">Kirjaudu sisään</a>
+    {% endif %}
+    </nav>
 
 <body>
     
 
 </html><link rel="stylesheet" href="/staic/style.css">
 <div class="wrapper_review">
-<h2>Mökkisivut</h2>
+<h2>Guestbook</h2>
 
 
 <hr>
