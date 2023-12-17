@@ -26,7 +26,7 @@ CREATE TABLE fixes (
 
 CREATE TABLE Img (
     id SERIAL PRIMARY KEY,
-    img TEXT,
+    img BYTEA,
     name TEXT,
     mimetype TEXT
 );

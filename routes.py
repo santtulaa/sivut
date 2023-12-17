@@ -4,10 +4,11 @@ from base64 import b64encode
 from models import Img
 from app import app
 from db import db
-from users import get_user_id
+from users import get_user_id, register
 import users, reviews, fixes
 from reservations import reservation
 import reservations
+
 
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}

@@ -15,7 +15,7 @@
         }
 
         h1 {
-            color: #333;
+            color: #fff;
         }
 
         .gallery {
@@ -48,7 +48,7 @@
 
 <nav>
     {% if session.user_id %}
-    <a href="/review">Write in the questbook</a> <a href="/calendar">Calendar</a> <a href="/show_photos">Photos</a> <a href="/logout">Sign out</a> 
+    <a href="/front">Guestbook</a> <a href="/calendar">Calendar</a> <a href="/show_photos">Photos</a> <a href="/logout">Sign out</a> 
     <p>
     {% else %}
     <a href="/login">Kirjaudu sisään</a>
@@ -57,10 +57,11 @@
 
 <body>
     <div class="wrapper_review">
-        <h1>Upload Image</h1>
+        <h1>Upload Image</h1> <br>
         <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
             <input type="file" name="pic" accept=".png, .jpg, .jpeg, .gif" required>
-            <button type="submit">Upload</button>
+            
+            <button type="submit" class="login">Upload</button>
         </form>
     </div>
 
@@ -70,10 +71,5 @@
         {% endfor %}
     </div>
 
-    <!-- Add the image upload form -->
-    <form class="upload-form" action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
-        <input type="file" name="pic" accept=".png, .jpg, .jpeg, .gif" required>
-        <button type="submit">Upload</button>
-    </form>
 </body>
 </html>

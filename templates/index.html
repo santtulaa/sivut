@@ -9,7 +9,7 @@
 </head>
 <nav>
     {% if session.user_id %}
-    <a href="/review">Write in the questbook</a> <a href="/calendar">Calendar</a> <a href="/show_photos">Photos</a> <a href="/logout">Sign out</a> 
+    <a href="/front">Guestbook</a> <a href="/calendar">Calendar</a> <a href="/show_photos">Photos</a> <a href="/logout">Sign out</a> 
     <p>
     {% else %}
     <a href="/login">Kirjaudu sisään</a>
@@ -17,7 +17,14 @@
     </nav>
 
 <body>
-    
+    <body>
+        <form action="/send" method="post">
+            <div class="input-box">
+                <input type="text" name="name" placeholder="Tell us about your trip" required>
+            </div>
+            <button type="submit" class="login">Send</button>
+            </form>
+    </body>
 
 </html><link rel="stylesheet" href="/staic/style.css">
 <div class="wrapper_review">

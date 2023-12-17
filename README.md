@@ -27,9 +27,6 @@ python3: pääsee pois control + d
 jos psql ei anna poistaa tablea, koska käytössä:
  DROP TABLE taulukonnimi CASCADE;
 
-MUISTA!!!!
-laittaa requirements.txt kuntoon vielä ennen sunnuntaita
-
 
 # Käynnistysohjeet: #
 1. Kloonaa projekti omalle koneellesi 
@@ -42,6 +39,12 @@ SECRET_KEY=43f71de180ba654ee56e8ade27f89807
 - pip install -r requirements.txt
 - python3 -m venv venv
 - source venv/bin/activate
-5. Määritä vielä tietokannan skeema komennolla psql < schema.sql
+- pip install -r ./requirements.txt
+5. Määritä vielä tietokannan skeema komennolla
+- psql < schema.sql
+- Huom! Halutessasi voit myös luoda oman tietokannan sovellusta varten ja lisätä taulukot sinne. Tämä onnistuu seuraavalla tavalla:
+    - psql
+    - CREATE DATABASE salmelsa
+    - psql -d salmelsa <schema.sql       
 6. Voit käynnistää sovelluksen komennolla flask run
 
