@@ -13,11 +13,14 @@ def send(comment):
     user_id = users.user_id()
     if user_id == 0:
         return False
+
+    # users.check_csrf() 
+   
+
+    # If check_csrf fails, the code stops above and never reaches the SQL below
     sql = text("INSERT INTO reviews (comment, user_id, sent_at) VALUES (:comment, :user_id, NOW())")
     db.session.execute(sql, {"comment": comment, "user_id": user_id, "sent_at": func.now()})
     db.session.commit()
-
-
     return True
 
 

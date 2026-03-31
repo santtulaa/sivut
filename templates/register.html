@@ -15,10 +15,13 @@
     <form action="/register" method="post" onsubmit="return check(this)">
         Tunnus: <br><input type="text" name="name" minlength="2" maxlength="20">
         <p>
-        Salasana: <br><input type="password" name="password1">
+        Salasana: <br>
+        <input type="password" name="password1" id="pw1">
         <p>
-        Salasana uudestaan: <br><input type="password" name="password2">
-    
+        Salasana uudestaan: <br>
+        <input type="password" name="password2" id="pw2">
+        <p>
+        <input type="checkbox" onclick="togglePassword()"> Show Password
         {% if error_message %}
             <p style="color: red;">{{ error_message }}</p>
         {% endif %}
@@ -28,39 +31,58 @@
     
         <input type="submit" value="Luo tunnus">
     </form>
-    
     <p>
     <a href="/">Palaa takaisin</a>
     
     <script>
-        function check(form) {
-            if (form.password1.value != form.password2.value) {
-                alert("salasanat eivät ole samat");
-                return false;
-            }
-    
-            if (form.name.value.length < 2 || form.name.value.length > 20) {
-                alert("käyttäjätunnuksen pitää olla 2-20 merkkiä");
-                return false;
-            }
-    
-            if (form.password1.value == "") {
-                alert("salasana ei voi olla tyhjänä");
-                return false;
-            }
-    
-            // Check if username already exists
-            if (form.username_exists.value !== "") {
-                alert("käyttäjänimi on jo käytössä" + form.username_exists.value);
-                return false;
-            }
-    
-            return true;
+    // This function handles the form validation
+    function check(form) {
+        if (form.password1.value != form.password2.value) {
+            alert("salasanat eivät ole samat");
+            return false;
         }
-    </script>
+
+        if (form.name.value.length < 2 || form.name.value.length > 20) {
+            alert("käyttäjätunnuksen pitää olla 2-20 merkkiä");
+            return false;
+        }
+
+        if (form.password1.value == "") {
+            alert("salasana ei voi olla tyhjänä");
+            return false;
+        }
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
+
+        // Salasanan pitää olla tarpeeksi suojattu
+        // if (!passwordRegex.test(form.password1.value)) {
+        // alert("Salasanan pitää olla 8-15 merkkiä pitkä ja sisältää sekä pieniä että suuria kirjaimia.");
+        // return false;
+        // }
+
+        if (form.username_exists.value !== "") {
+            alert("käyttäjänimi on jo käytössä" + form.username_exists.value);
+            return false;
+        }
+
+        return true;
+    } // <--- Added this bracket to close the check function
+
+    // This function handles the checkbox toggle
+    function togglePassword() {
+        var p1 = document.getElementById("pw1");
+        var p2 = document.getElementById("pw2");
+
+        if (p1.type === "password") {
+            p1.type = "text";
+            p2.type = "text";
+        } else {
+            p1.type = "password";
+            p2.type = "password";
+        }
+    }
+</script>
     {% endblock %}
     
 </div>
 </body>
-
 

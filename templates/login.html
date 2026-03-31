@@ -13,6 +13,19 @@
     <div class="wrapper">
         <form action="/" method="post">
             <h1>Login</h1>
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div class="flash-messages">
+                  {% for message in messages %}
+                    <p style="color: #ff4d4d; text-align: center; margin-bottom: 15px;">{{ message }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+
+            <input type="hidden" name="next" value="{{ next or '' }}">
+
             <div class="input-box">
                 <input type="text" name="name" placeholder="Username" required>
                 <i class='bx bxs-user'></i>
@@ -20,7 +33,6 @@
             <div class="input-box">
                 <input type="password" name="password" placeholder="Password" required>
                 <i class='bx bxs-lock-alt' ></i>
-
             </div>
 
             <div class="remember-forgot">

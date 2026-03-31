@@ -5,17 +5,26 @@ from sqlalchemy import text
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def register(name, password):
-    hash_value = generate_password_hash(password)
+    #
     try:
-        sql =text("INSERT INTO users (name, password) VALUES (:name, :password)")
-        db.session.execute(sql, {"name":name, "password":hash_value})
+        sql = text("INSERT INTO users (name, password) VALUES (:name, :password)")
+        db.session.execute(sql, {"name": name, "password": password})
         db.session.commit()
         return True
     
+    ## hashing suojaus salasanaan
+    # hash_value = generate_password_hash(password)
+    # try:
+    #     sql =text("INSERT INTO users (name, password) VALUES (:name, :password)")
+    #     db.session.execute(sql, {"name":name, "password":hash_value})
+    #     db.session.commit()
+    #     return True
+    
     except Exception as e:
         print(f"Error inserting into database: {e}")
-        return False
     
+        return False
+
 def login(name, password):
     sql = text("SELECT id, password FROM users WHERE name=:name") 
     result = db.session.execute(sql, {"name": name}).fetchone()
@@ -40,7 +49,10 @@ def user_id():
     return session.get("user_id", 0)
 
 def check_csrf():
-    if session["csrf_token"] != request.form["csrf_token"]:
+    token_in_form = request.form.get("csrf_token")
+    
+    # If the token is missing OR doesn't match the session
+    if not token_in_form or session.get("csrf_token") != token_in_form:
         abort(403)
 
 
