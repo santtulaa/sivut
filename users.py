@@ -48,12 +48,11 @@ def logout():
 def user_id():
     return session.get("user_id", 0)
 
-def check_csrf():
-    token_in_form = request.form.get("csrf_token")
-    
-    # If the token is missing OR doesn't match the session
-    if not token_in_form or session.get("csrf_token") != token_in_form:
-        abort(403)
+## csrf suojaus
+# def check_csrf():
+#     token_in_form = request.form.get("csrf_token")
+#     if not token_in_form or session.get("csrf_token") != token_in_form:
+#         abort(403) 
 
 
 def get_user_id(name):
