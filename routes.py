@@ -8,8 +8,9 @@ from users import get_user_id, register
 import users, reviews, fixes
 from reservations import reservation
 import reservations
-from urllib.parse import urlparse, urljoin  # Added for URL validation
+from urllib.parse import urlparse, urljoin 
 from functools import wraps
+import re
 
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -61,6 +62,9 @@ def register():
             return render_template("register.html")
         if password1 == "":
             return render_template("register.html")
+        
+        # if not re.match(r"^(?=.*[a-z])(?=.*[A-Z]).{8,15}$", password1):
+        #     return render_template("error.html", message="Salasanan pitää olla 8-15 merkkiä pitkä ja sisältää sekä pieniä että suuria kirjaimia.")
         
         if not users.register(name, password1):
             return render_template("register.html")
@@ -126,7 +130,6 @@ def calendar():
 
 @app.route("/send", methods=["POST"])
 def send():
-    # Note: You should call users.check_csrf() here once you implement the hidden input in your HTML
     content = request.form["content"]
     if reviews.send(content):
         return redirect("/front")

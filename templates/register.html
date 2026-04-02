@@ -35,7 +35,7 @@
     <a href="/">Palaa takaisin</a>
     
     <script>
-    // This function handles the form validation
+
     function check(form) {
         if (form.password1.value != form.password2.value) {
             alert("salasanat eivät ole samat");
@@ -53,11 +53,11 @@
         }
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
 
-        // Salasanan pitää olla tarpeeksi suojattu
-        // if (!passwordRegex.test(form.password1.value)) {
-        // alert("Salasanan pitää olla 8-15 merkkiä pitkä ja sisältää sekä pieniä että suuria kirjaimia.");
-        // return false;
-        // }
+
+        if (!passwordRegex.test(form.password1.value)) {
+        alert("Salasanan pitää olla 8-15 merkkiä pitkä ja sisältää sekä pieniä että suuria kirjaimia.");
+        return false;
+        }
 
         if (form.username_exists.value !== "") {
             alert("käyttäjänimi on jo käytössä" + form.username_exists.value);
@@ -65,9 +65,8 @@
         }
 
         return true;
-    } // <--- Added this bracket to close the check function
+    } 
 
-    // This function handles the checkbox toggle
     function togglePassword() {
         var p1 = document.getElementById("pw1");
         var p2 = document.getElementById("pw2");
