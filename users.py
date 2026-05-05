@@ -5,7 +5,6 @@ from sqlalchemy import text
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def register(name, password):
-    #
     try:
         sql = text("INSERT INTO users (name, password) VALUES (:name, :password)")
         db.session.execute(sql, {"name": name, "password": password})
@@ -62,9 +61,9 @@ def get_user_id(name):
         return result[0]
     return None
 
-def check_csrf():
-	if session["csrf_token"] != request.form["csrf_token"]:
-		abort(403)
+# def check_csrf():
+# 	if session["csrf_token"] != request.form["csrf_token"]:
+# 		abort(403)
           
 def username_exists(username):
     sql = text("SELECT id FROM users WHERE name = :name")
